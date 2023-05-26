@@ -1,2 +1,3 @@
 # go-web-learn
-学习 go web 编程
+
+7days-golang 学习内容
