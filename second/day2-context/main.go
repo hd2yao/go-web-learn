@@ -1,26 +1,28 @@
 package main
 
 import (
-	"gee"
-	"net/http"
+    "fmt"
+    "gee"
+    "net/http"
 )
 
 func main() {
-	r := gee.New()
-	r.GET("/", func(context *gee.Context) {
-		context.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
-	})
+    r := gee.New()
+    r.GET("/", func(context *gee.Context) {
+        context.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
+    })
 
-	r.GET("/hello", func(context *gee.Context) {
-		context.String(http.StatusOK, "Hello %s, you're at %s\n", context.Query("name"), context.Path)
-	})
+    r.GET("/hello", func(context *gee.Context) {
+        context.String(http.StatusOK, "Hello %s, you're at %s\n", context.Query("name"), context.Path)
+    })
 
-	r.POST("/login", func(context *gee.Context) {
-		context.JSON(http.StatusOK, gee.H{
-			"username": context.PostForm("username"),
-			"password": context.PostForm("password"),
-		})
-	})
+    r.POST("/login", func(context *gee.Context) {
+        context.JSON(http.StatusOK, gee.H{
+            "username": context.PostForm("username"),
+            "password": context.PostForm("password"),
+        })
+    })
 
-	r.Run(":9999")
+    fmt.Println()
+    r.Run(":9999")
 }
