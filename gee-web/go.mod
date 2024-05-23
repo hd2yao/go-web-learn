@@ -1,3 +1,7 @@
-module github.com/hd2yao/go-web-learn/gee-web
+module gee-web
 
 go 1.20
+
+require gee v0.0.0
+
+replace gee => ./gee
