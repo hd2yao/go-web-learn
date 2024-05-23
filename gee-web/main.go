@@ -1,7 +1,6 @@
 package main
 
 import (
-    "fmt"
     "gee"
     "net/http"
 )
@@ -9,14 +8,18 @@ import (
 func main() {
     router := gee.New()
 
-    router.GET("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+    router.GET("/", func(c *gee.Context) {
+        c.HTML(http.StatusOK, "<h1>Hello Gee<h1>")
     })
-    router.GET("/hello", func(w http.ResponseWriter, r *http.Request) {
-        for k, v := range r.Header {
-            fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
-        }
+    router.GET("/hello", func(c *gee.Context) {
+        c.String(http.StatusOK, "hello %s, you're at %s\n", c.Query("name"), c.Path)
+    })
+    router.POST("/login", func(c *gee.Context) {
+        c.JSON(http.StatusOK, gee.H{
+            "user_name": c.PostForm("user_name"),
+            "password":  c.PostForm("password"),
+        })
     })
 
-    router.Run(":9999")
+    router.Run(":9990")
 }

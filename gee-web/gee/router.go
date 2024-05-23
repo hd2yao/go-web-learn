@@ -20,7 +20,7 @@ func (r *router) addRoute(method string, pattern string, handler HandlerFunc) {
 }
 
 func (r *router) handle(c *Context) {
-    key := c.Path + "-" + c.Method
+    key := c.Method + "-" + c.Path
     if handler, ok := r.handlers[key]; ok {
         handler(c)
     } else {
