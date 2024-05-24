@@ -18,12 +18,21 @@ func (n *node) String() string {
 
 // 第一个匹配成功的节点，用于插入
 func (n *node) matchChild(part string) *node {
+    var wildChild *node
     for _, child := range n.children {
-        if child.part == part || child.isWild {
+        // 这里查找不够严谨，可能会发生精准匹配和通配符匹配都匹配成功的结果
+        // 可以修改为：优先精准匹配
+        //if child.part == part || child.isWild {
+        //    return child
+        //}
+        if child.part == part {
             return child
         }
+        if child.isWild {
+            wildChild = child
+        }
     }
-    return nil
+    return wildChild
 }
 
 // 所有匹配成功的节点，用于查找
